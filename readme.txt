@@ -9,20 +9,23 @@ Stable tag: 1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Ever want to do some conflict testing by activating and deactivating a bunch of plugins, and then when you're done, go back to how things were before without having to make a full site backup? Plugin Status Snapshotter lets you make a Snaphot of which plugins are currently active in your site and then restore that Snapshot at a later time, instantly (re)activating all plugins from that Snapshot.
+Makes Snaphots of the plugins that are active on your site, so you can always go back to how things were before after a round of conflict testing.
 
 == Description ==
 
 = Summary =
 
-With Plugin Status Snapshotter, you can make a Snaphot of which plugins are currently active in your site. That way, you can make a Snapshot, then activate and deactivate plugins for testing as much as you like, and then restore the Snapshot again to go back to how things were before.
+Ever want to do some conflict testing by activating and deactivating a bunch of plugins, and then when you're done, go back to how things were before without having to make a full site backup? 
 
-Snapshots will only keep track which plugins were ACTIVE or not. It will not back up any plugin's settings, or install/delete plugins.
+With Plugin Status Snapshotter, you can make a Snaphot of which plugins are currently active in your site, then activate and deactivate plugins for testing as much as you like, and then restore the Snapshot again to go back to how things were before.
+
+Snapshots will only keep track which plugins were ACTIVE or not. It will NOT back up/restore any plugin's settings, or install/delete plugins.
 
 
 = Features =
 
 * One click to create or restore a Snapshot.
+* Make as many snapshots as you like.
 * Only saves which plugins are active and which aren't. 
 * No full database/configuration backup, so Snapshots are created and restored lightning fast.
 * View which plugins were active when a Snapshot was made, before you restore it.
