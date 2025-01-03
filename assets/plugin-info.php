@@ -28,7 +28,7 @@
 		<li><strong>
 			<?php esc_html_e('Github:','plugin-status-snapshotter'); ?>
 			</strong> 
-			<a href="https://github.com/senff/plugin-status-snapshotter" target="_blank"><?php esc_html_e( 'Code','plugin-status-snapshotter'); ?></a>
+			<a href="https://github.com/senff/WordPress-Plugin-Status-Snapshotter" target="_blank"><?php esc_html_e( 'Code','plugin-status-snapshotter'); ?></a>
 		</li>
 		<li><strong>
 			<?php esc_html_e('Donate:','plugin-status-snapshotter'); ?>
