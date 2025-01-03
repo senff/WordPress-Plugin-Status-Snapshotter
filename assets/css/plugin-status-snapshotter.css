@@ -1,0 +1,213 @@
+.hide {
+	display:none;
+}
+
+.bold-text {
+	font-weight: bold;
+}
+
+.spinner {
+	position: relative;
+	top: -4px;
+}
+
+
+
+
+#pluginstatussnapshotter-settings,
+#pluginstatussnapshotter-settings p {
+	font-size: 14px;
+}
+
+#pluginstatussnapshotter-settings .postbox {
+	padding: 0 20px;
+	overflow: hidden;
+}
+
+#pluginstatussnapshotter-settings .nav-tab.additional {
+	font-style: italic;
+}
+
+#pluginstatussnapshotter-settings .failed-plugins {
+	font-weight: bold;
+}
+
+/* --- CONTENT: CURRENT PLUGINS AND SAVE ------------------------------------------------------------ */
+
+#pluginstatussnapshotter-settings .create-save-snapshot .postbox{
+
+}
+
+#pluginstatussnapshotter-settings .save-snapshot,
+#pluginstatussnapshotter-settings .active-plugins {
+	width: 50%;
+	float: left;
+	height: auto;
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+
+#pluginstatussnapshotter-settings .save-snapshot {
+	text-align: center;
+	height: auto;
+}
+
+#pluginstatussnapshotter-settings .save-snapshot p {
+	text-align: left;
+}
+
+#pluginstatussnapshotter-settings .save-snapshot .button-large {
+	font-size: 18px;
+	padding: 10px 30px;
+	margin: 10px 0 15px 30px;
+}
+
+#pluginstatussnapshotter-settings .active-plugins {
+	padding-left: 40px;
+	border-left: solid 1px #dddddd;
+	min-height: 200px;
+}
+
+#pluginstatussnapshotter-settings .active-plugins-list, 
+#pluginstatussnapshotter-settings .active-plugins-list li {
+	list-style-type: disc;
+	margin: 5px 10px;
+	line-height: 20px;
+	color: #999999;
+}
+
+#pluginstatussnapshotter-settings .active-plugins-list li strong {
+	color:#000000;
+}
+
+#pluginstatussnapshotter-settings .active-plugins-list {
+	margin: 15px 0;
+}
+
+#pluginstatussnapshotter-settings .save-snapshot {
+	text-align: center;
+}
+
+
+/* --- CONTENT: PREVIOUS SNAPSHOTS ------------------------------------------------------------ */
+
+#pluginstatussnapshotter-settings .previous-snapshots {
+	border-top: solid 1px #ddd;
+	padding-top: 20px;
+	margin-top: 40px;
+}
+
+#pluginstatussnapshotter-settings .snapshot-date {
+	width:300px;
+	padding-top: 10px;
+}
+
+#pluginstatussnapshotter-settings th.snapshot-actions {
+	width:200px;
+}
+
+#pluginstatussnapshotter-settings .show-details,
+#pluginstatussnapshotter-settings .hide-details {
+	margin: 0 0 5px 0;
+}
+
+#pluginstatussnapshotter-settings .hide-details {
+	display: none;
+}
+
+#pluginstatussnapshotter-settings .snapshot-data ul,
+#pluginstatussnapshotter-settings .snapshot-data li {
+	list-style-type: disc;
+	margin:5px 0 5px 12px;
+	font-size: 14px;
+	color:#999999;
+}
+
+#pluginstatussnapshotter-settings .snapshot-data li strong {
+	color:#2c3338;
+}
+
+#pluginstatussnapshotter-settings .snapshot-data ul {
+	margin-top:10px;
+}
+
+#pluginstatussnapshotter-settings .snapshot-data .plugins-in-snapshot {
+	display: none;
+}
+
+#pluginstatussnapshotter-settings .snapshot-actions input {
+	display: inline-block;
+	margin: 0 5px 0 0;
+}
+
+#pluginstatussnapshotter-settings .snapshot-actions input.button-delete {
+	background: #dd0000;
+	border: solid 1px #dd0000;
+}
+
+#pluginstatussnapshotter-settings .snapshot-actions input.button-delete:hover {
+	background: #cc0000;
+	border: solid 1px #cc0000;
+}
+
+#pluginstatussnapshotter-settings ul.plugin-list,
+#pluginstatussnapshotter-settings ul.plugin-list {
+	list-style-type: disc;
+	margin-left:20px;
+}
+
+#pluginstatussnapshotter-settings ul.plugin-list li strong {
+	font-size: 16px;
+}
+
+/* --- CONTENT: PREVIOUS SNAPSHOTS ------------------------------------------------------------ */
+
+#pluginstatussnapshotter-confirmation-overlay {
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:#666;
+    opacity: 0.5;
+    z-index:9997;
+    display: none;
+}
+
+#pluginstatussnapshotter-settings .pluginstatussnapshotter-confirmation-container {
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index:9998;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#pluginstatussnapshotter-settings .pluginstatussnapshotter-confirmation-dialog {
+	position: fixed;
+	z-index: 9999;
+	width: 500px;
+	background: white;
+	padding: 0 20px 20px 30px;
+	border: solid 3px #2271b1;
+}
+
+#pluginstatussnapshotter-settings .buttons-container {
+	text-align: center;
+}
+
+#pluginstatussnapshotter-settings .buttons-container input,
+#pluginstatussnapshotter-settings .buttons-container button {
+	margin: 5px;
+}
+
+
+
+
+
+#pluginstatussnapshotter-settings .faq-answer {
+	margin-left:30px;
+}
