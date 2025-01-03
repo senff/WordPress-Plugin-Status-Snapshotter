@@ -71,6 +71,10 @@ jQuery(function($) {
         d.stopPropagation();
     });
 
+    $('.button-action').on('click',function(){
+        $(this).parent().find('.spinner').addClass('is-active');
+    });    
+
     // --- SHOWING/HIDING THE PLUGINS IN A SNAPSHOT -----------------------------------
 
     $('button.show-details').on('click',function(){
@@ -84,13 +88,5 @@ jQuery(function($) {
         $(this).hide();
         $(this).parent().find('button.show-details').show();
     });     
-
-    // --- SHOWING/HIDING THE PLUGINS IN A SNAPSHOT -----------------------------------
-
-    $('.button-action').on('click',function(){
-        $(this).parent().find('.spinner').addClass('is-active');
-    });
-
-
 
 });
