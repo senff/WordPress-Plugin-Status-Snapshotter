@@ -6,17 +6,16 @@
 	font-weight: bold;
 }
 
-.spinner {
-	position: relative;
-	top: -4px;
-}
-
-
-
+/* --- GENERIC STYLES ------------------------------------------------------------ */
 
 #pluginstatussnapshotter-settings,
 #pluginstatussnapshotter-settings p {
 	font-size: 14px;
+}
+
+#pluginstatussnapshotter-settings .spinner {
+	position: relative;
+	top: -4px;
 }
 
 #pluginstatussnapshotter-settings .postbox {
@@ -33,10 +32,6 @@
 }
 
 /* --- CONTENT: CURRENT PLUGINS AND SAVE ------------------------------------------------------------ */
-
-#pluginstatussnapshotter-settings .create-save-snapshot .postbox{
-
-}
 
 #pluginstatussnapshotter-settings .save-snapshot,
 #pluginstatussnapshotter-settings .active-plugins {
@@ -160,7 +155,7 @@
 	font-size: 16px;
 }
 
-/* --- CONTENT: PREVIOUS SNAPSHOTS ------------------------------------------------------------ */
+/* --- CONTENT: OVERLAY AND POPUP ------------------------------------------------------------ */
 
 #pluginstatussnapshotter-confirmation-overlay {
 	position: fixed;
@@ -204,9 +199,7 @@
 	margin: 5px;
 }
 
-
-
-
+/* --- CONTENT: FAQ ------------------------------------------------------------ */
 
 #pluginstatussnapshotter-settings .faq-answer {
 	margin-left:30px;
