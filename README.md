@@ -9,7 +9,7 @@
 * License: GPLv3
 * License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Makes Snaphots of the plugins that are active on your site, so you can always go back to how things were before after a round of conflict testing.
+Saves a list of currently active plugins so that you can do some testing, and then when you're done, go back to how things were before.
 
 ## Description
 
