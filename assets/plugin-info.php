@@ -21,8 +21,8 @@
 			<a href="https://wordpress.org/plugins/plugin-status-snapshotter" target="_blank"><?php esc_html_e( 'WordPress.org','plugin-status-snapshotter'); ?></a>
 		</li>
 		<li><strong>
-			<?php esc_html_e('Support Forum','plugin-status-snapshotter'); ?>
-			</strong>: 
+			<?php esc_html_e('Support Forum:','plugin-status-snapshotter'); ?>
+			</strong>
 			<a href="https://wordpress.org/support/plugin/plugin-status-snapshotter" target="_blank"><?php esc_html_e( 'WordPress.org','plugin-status-snapshotter'); ?></a>
 		</li>
 		<li><strong>
@@ -45,8 +45,12 @@
 </div>
 
 <p>
-	<?php esc_html_e('Please report bugs or feature requests on ','plugin-status-snapshotter'); ?>
+	<?php esc_html_e('Please report bugs on ','plugin-status-snapshotter'); ?>
 	<strong>
-		<a href="https://wordpress.org/support/plugin/plugin-status-snapshotter" target="_blank"><?php esc_html_e( 'WordPress.org','plugin-status-snapshotter'); ?></a>
+		<a href="https://wordpress.org/support/plugin/plugin-status-snapshotter" target="_blank"><?php esc_html_e( 'WordPress.org','plugin-status-snapshotter'); ?></a>.
+	</strong><br>
+	<?php esc_html_e('Feature requests are best posted on','plugin-status-snapshotter'); ?>
+	<strong>
+		<a href="https://github.com/senff/WordPress-plugin-status-snapshotter/issues" target="_blank"><?php esc_html_e( 'Github','plugin-status-snapshotter'); ?></a>.
 	</strong>
 </p>

@@ -2,7 +2,7 @@
 /*
 Plugin Name: Plugin Status Snapshotter
 Plugin URI: https://wordpress.org/plugins/plugin-status-snapshotter
-Description: Save a list of currently active plugins so that you can do some testing, and then when you're done, go back to how things were before.
+Description: Saves a list of currently active plugins so that you can do some testing, and then when you're done, go back to how things were before.
 Author: Senff
 Author URI: http://www.senff.com
 Version: 1.0
@@ -167,7 +167,7 @@ function pluginstatussnapshotter_page() {
 										// Do this for each active plugin
 										$active_plugin_name = getpluginname($plugin_file);
 										$active_plugin_author = getpluginauthor($plugin_file);
-										echo '<li><strong>'.esc_html($active_plugin_name).'</strong> '.esc_html('by','plugin-status-snapshotter').' '.esc_html($active_plugin_author).'</li>';
+										echo '<li><strong>'.esc_html($active_plugin_name).'</strong> '.esc_html__('by','plugin-status-snapshotter').' '.esc_html($active_plugin_author).'</li>';
 									}
 									echo '</ul>';
 

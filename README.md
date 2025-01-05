@@ -73,6 +73,7 @@ Plugin Status Snapshotter's [community support forum](https://wordpress.org/supp
 Please go to the plugin's [community support forum](https://wordpress.org/support/plugin/plugin-status-snapshotter) and post a message. Note that support is provided on a voluntary basis and that it can be difficult to troubleshoot, as it may require access to your admin area. Needless to say, NEVER include any passwords of your site on a public forum!
 
 
+
 ## Screenshots
 
 1. List of saved Snapshots
