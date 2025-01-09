@@ -28,7 +28,7 @@ function pluginstatussnapshotter_default_options() {
 		$current_date_time = sanitize_text_field(gmdate('l, M d, Y (H:i:s)'));
 		$active_plugins = [];
 		$pss_note = sanitize_text_field('Example Snapshot with only Plugin Status Snapshotter active.');
-		array_push($active_plugins, [plugin_basename(__FILE__),'Plugin Status Snapshotter','Senff']);  // Can be hardcoded because this is only the dir + filename
+		array_push($active_plugins, [plugin_basename(__FILE__),'Plugin Status Snapshotter','Senff']); 
 		$pss_new_element = [$pss_id, $current_date_time, $active_plugins, $pss_note];
 		array_push($pss_allsnapshots, $pss_new_element); 
 
