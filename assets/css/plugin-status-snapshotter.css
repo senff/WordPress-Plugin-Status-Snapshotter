@@ -44,6 +44,7 @@
 
 #pluginstatussnapshotter-settings .save-snapshot {
 	text-align: center;
+	padding: 10px 20px 10px 0;
 	height: auto;
 }
 
@@ -93,12 +94,14 @@
 }
 
 #pluginstatussnapshotter-settings .snapshot-date {
-	width:300px;
+	width:250px;
 	padding-top: 10px;
 }
 
-#pluginstatussnapshotter-settings th.snapshot-actions {
-	width:200px;
+
+#pluginstatussnapshotter-settings .snapshot-note {
+	width: 400px;
+	padding-right: 20px;
 }
 
 #pluginstatussnapshotter-settings .show-details,
@@ -133,6 +136,10 @@
 #pluginstatussnapshotter-settings .snapshot-actions input {
 	display: inline-block;
 	margin: 0 5px 0 0;
+}
+
+#pluginstatussnapshotter-settings .snapshot-actions {
+	width: 180px;
 }
 
 #pluginstatussnapshotter-settings .snapshot-actions input.button-delete {
@@ -188,6 +195,12 @@
 	background: white;
 	padding: 0 20px 20px 30px;
 	border: solid 3px #2271b1;
+}
+
+
+#pluginstatussnapshotter-settings .pluginstatussnapshotter-confirmation-container .pssnote {
+	width: 100%;
+	margin-bottom: 15px;
 }
 
 #pluginstatussnapshotter-settings .buttons-container {

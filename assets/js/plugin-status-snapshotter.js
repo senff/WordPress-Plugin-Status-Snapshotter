@@ -44,12 +44,21 @@ jQuery(function($) {
         h.preventDefault();    
     });
 
+
+    // --- CONFIRMING A SAVE -----------------------------------
+
+    $('.button-save').on('click',function(){
+        $('#pluginstatussnapshotter-confirmation-overlay, .pluginstatussnapshotter-save-container, .pluginstatussnapshotter-save-container .pluginstatussnapshotter-confirmation-dialog').show();
+        $('.pluginstatussnapshotter-save-container').css('display','flex');
+    });
+
+
     // --- CONFIRMING A RESTORE / DELETE -----------------------------------
 
     $('form#pss-snapshot-restore-delete input').on('click',function(){
-        $('#pluginstatussnapshotter-confirmation-overlay, .pluginstatussnapshotter-confirmation-container, .pluginstatussnapshotter-confirmation-dialog').show();
-        $('.pluginstatussnapshotter-confirmation-container').css('display','flex');
-        var snapshot_id = $(this).parent().attr('data-snapshot-id');
+        $('#pluginstatussnapshotter-confirmation-overlay, .pluginstatussnapshotter-restoredelete-container, .pluginstatussnapshotter-restoredelete-container .pluginstatussnapshotter-confirmation-dialog').show();
+        $('.pluginstatussnapshotter-restoredelete-container').css('display','flex');
+       var snapshot_id = $(this).parent().attr('data-snapshot-id');
         var snapshot_action = $(this).attr('data-snapshot-action');
         $('.pluginstatussnapshotter-confirmation-dialog .snapshotid').val(snapshot_id);
         if (snapshot_action == 'delete') {
@@ -62,7 +71,7 @@ jQuery(function($) {
     });
 
     $('#pluginstatussnapshotter-confirmation-overlay,.pluginstatussnapshotter-confirmation-container, .pluginstatussnapshotter-confirmation-dialog input.close-confirmation').on('click',function(c){
-        $('.pluginstatussnapshotter-confirmation-dialog .snapshotid').val('');
+        $('.pluginstatussnapshotter-confirmation-dialog .snapshotid, .pluginstatussnapshotter-confirmation-dialog .pssnote').val('');
         $('#pluginstatussnapshotter-confirmation-overlay, .pluginstatussnapshotter-confirmation-container, .pluginstatussnapshotter-confirmation-dialog').hide();
         c.preventDefault();
     });

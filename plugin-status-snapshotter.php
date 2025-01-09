@@ -5,7 +5,7 @@ Plugin URI: https://wordpress.org/plugins/plugin-status-snapshotter
 Description: Saves a list of currently active plugins so that you can do some testing, and then when you're done, go back to how things were before.
 Author: Senff
 Author URI: http://www.senff.com
-Version: 1.0
+Version: 1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: plugin-status-snapshotter
@@ -13,15 +13,47 @@ Text Domain: plugin-status-snapshotter
 
 defined('ABSPATH') or die('INSERT COIN');
 
-
 // --- ON ACTIVATION: IF DATABASE VALUES ARE NOT SET AT ALL, ADD DEFAULT OPTIONS TO DATABASE ---------------------------
 
 function pluginstatussnapshotter_default_options() {
-	$versionNum = '1.0';
 	if (get_option('pluginstatussnapshotter') === false) {
-		$new_options['pss_version'] = $versionNum;		
-		$new_options['pss_snapshots'] = [];		
-		add_option('pluginstatussnapshotter',$new_options);
+
+		// Build DB entry with 2 default snapshots
+
+		$pss_allsnapshots = [];  // empty 3 dimensional array
+
+
+		// SNAPSHOT 1: only Plugin Status Snapshotter
+		$pss_id = '0000000000';
+		$current_date_time = sanitize_text_field(gmdate('l, M d, Y (H:i:s)'));
+		$active_plugins = [];
+		$pss_note = sanitize_text_field('Example Snapshot with only Plugin Status Snapshotter active.');
+		array_push($active_plugins, [plugin_basename(__FILE__),'Plugin Status Snapshotter','Senff']);  // Can be hardcoded because this is only the dir + filename
+		$pss_new_element = [$pss_id, $current_date_time, $active_plugins, $pss_note];
+		array_push($pss_allsnapshots, $pss_new_element); 
+
+		// SNAPSHOT 2: all current plugins
+		$pss_id = '0000000001';
+		$current_date_time = sanitize_text_field(gmdate('l, M d, Y (H:i:s)'));
+		$active_plugins = [];	// 2 dimensional array that will contain all active plugins
+		$pss_note = sanitize_text_field('Example Snapshot (created upon plugin activation).');		
+		$pss_wp_options = get_option( 'active_plugins' );
+		foreach ($pss_wp_options as $active_plugin_file) {
+			// Do this for each active plugin
+			$plugin_file = sanitize_text_field($active_plugin_file);
+			$plugin_name = sanitize_text_field(pluginstatussnapshotter_getpluginname($active_plugin_file));
+			$plugin_author = sanitize_text_field(pluginstatussnapshotter_getpluginauthor($active_plugin_file));
+			array_push($active_plugins, [$plugin_file,$plugin_name,$plugin_author]);
+		}
+		// Need to add this plugin manually, since it's not active yet
+		array_push($active_plugins, [plugin_basename(__FILE__),'Plugin Status Snapshotter','Senff']); 
+		$pss_new_element = [$pss_id, $current_date_time, $active_plugins, $pss_note];
+		array_push($pss_allsnapshots, $pss_new_element); 
+
+		// READY TO PUSH INTO DB
+		$new_snapshots['pss_snapshots'] = $pss_allsnapshots;
+		update_option( 'pluginstatussnapshotter', $new_snapshots );			
+
 	} 
 }
 
@@ -144,13 +176,7 @@ function pluginstatussnapshotter_page() {
 
 								<p><?php esc_html_e('When you create a Snapshot, it will save a list of which plugins are currently active on your site. It will NOT save the individual configurations/settings of each plugin; ONLY whether or not they are active.','plugin-status-snapshotter'); ?></p>
 
-								<form method="post" action="admin-post.php">
-									<input type="hidden" name="action" value="save_pluginstatussnapshotter_snapshot" />
-									<?php 
-										wp_nonce_field( 'pss_save_snapshot' ); 
-								    ?>
-									<input type="submit" value="<?php esc_attr_e('Create Snapshot','plugin-status-snapshotter'); ?>" class="button-primary button-large button-action"/> <span id="plugin-check__spinner" class="spinner spinner-save" style="float: none;"></span>
-								</form>							
+								<button class="button-primary button-large button-action button-save"><?php esc_attr_e('Create Snapshot','plugin-status-snapshotter'); ?></button>
 
 							</div>
 
@@ -165,8 +191,8 @@ function pluginstatussnapshotter_page() {
 									echo '<ul class="active-plugins-list">';
 									foreach ($pss_wp_options as $plugin_file) {
 										// Do this for each active plugin
-										$active_plugin_name = getpluginname($plugin_file);
-										$active_plugin_author = getpluginauthor($plugin_file);
+										$active_plugin_name = pluginstatussnapshotter_getpluginname($plugin_file);
+										$active_plugin_author = pluginstatussnapshotter_getpluginauthor($plugin_file);
 										echo '<li><strong>'.esc_html($active_plugin_name).'</strong> '.esc_html__('by','plugin-status-snapshotter').' '.esc_html($active_plugin_author).'</li>';
 									}
 									echo '</ul>';
@@ -178,6 +204,34 @@ function pluginstatussnapshotter_page() {
 						</div>
 
 					</div>
+
+
+					<div class="pluginstatussnapshotter-confirmation-container pluginstatussnapshotter-save-container">
+						<div class="pluginstatussnapshotter-confirmation-dialog">
+
+							<form method="post" action="admin-post.php">
+								<input type="hidden" name="action" value="save_pluginstatussnapshotter_snapshot" />
+								<?php 
+									wp_nonce_field( 'pss_save_snapshot' ); 
+							    ?>
+							   	<div class="section-save">
+							   		<h3><?php esc_html_e('Save Snapshot','plugin-status-snapshotter'); ?></h3>
+									<p><?php esc_html_e('OPTIONAL: you can enter a description/note for this snapshot, to identify it later - for example, ','plugin-status-snapshotter'); ?>
+									<em>"<?php esc_html_e('my favorite set of plugins','plugin-status-snapshotter'); ?>"</em>,
+									<em>"<?php esc_html_e('only the basic plugins','plugin-status-snapshotter'); ?>"</em>, 
+									<?php esc_html_e('etc.','plugin-status-snapshotter'); ?>
+									(<?php esc_html_e('255 characters max','plugin-status-snapshotter'); ?>)</p>
+									<div class="buttons-container">
+										<input type="text" class="pssnote" maxlength="255" name="note" placeholder="<?php esc_html_e('e.g. My favorite set of plugins','plugin-status-snapshotter'); ?>"><br>
+										<button type="submit" class="button-primary button-action"><?php esc_html_e('CREATE SNAPSHOT','plugin-status-snapshotter'); ?></button><input type="button" class="close-confirmation button-secondary" value="CANCEL"><br/><span id="plugin-check__spinner" class="spinner" style="float: none;"></span>
+									</div>
+								</div>
+
+							</form>	
+
+						</div>
+					</div>
+
 
 					<div class="previous-snapshots">
 
@@ -202,6 +256,7 @@ function pluginstatussnapshotter_page() {
 									<thead>
 										<tr style="margin-bottom: 4px;">
 											<th class="snapshot-date"><?php esc_html_e('Date','plugin-status-snapshotter'); ?></th>
+											<th class="snapshot-note"><?php esc_html_e('Note/Description','plugin-status-snapshotter'); ?></th>
 											<th class="snapshot-details"><?php esc_html_e('Details (click to show plugins)','plugin-status-snapshotter'); ?></th>
 											<th class="snapshot-actions"><?php esc_html_e('Actions','plugin-status-snapshotter'); ?></th>
 										</tr>		
@@ -217,12 +272,19 @@ function pluginstatussnapshotter_page() {
 												// 2[0][0] = path;
 												// 2[0][1] = name;
 												// 2[0][2] = author;
+												// 3 = note;
 												$snapshot_plugins = $snapshot[2]; // Array of all plugins in this Snapshot
 												$howmanyplugins = count($snapshot_plugins);											
 												echo '<tr>';
-												echo '<td class="snapshot-date data-snapshot="'.esc_attr($snapshot[0]).'"><strong>'.esc_attr($snapshot[1]).'</strong></td>';
-												echo '<td class="snapshot-data">';
-												echo '<p><strong>'.esc_html($howmanyplugins).'</strong> '.esc_html__('active plugins when this shapshot was made.','plugin-status-snapshotter').'</p>';
+												echo '<td class="snapshot-date" data-snapshot="'.esc_attr($snapshot[0]).'"><strong>'.esc_attr($snapshot[1]).'</strong></td>';
+												echo '<td class="snapshot-note"><p>'.esc_attr($snapshot[3]).'</p></td>';
+												echo '<td class="snapshot-data"><p><strong>'.esc_html($howmanyplugins).'</strong> active ';
+												if ($howmanyplugins == 1) {
+													echo esc_html__('plugin','plugin-status-snapshotter');
+												} else {
+													echo esc_html__('plugins','plugin-status-snapshotter');
+												}
+												echo esc_html__(' when this shapshot was made.','plugin-status-snapshotter').'</p>';
 												echo '<button class="show-details button-secondary">'.esc_attr__('SHOW PLUGINS','plugin-status-snapshotter').'</button><button class="hide-details button-secondary">'.esc_html__('HIDE PLUGINS','plugin-status-snapshotter').'</button>';
 												echo '<div class="plugins-in-snapshot"><ul>';
 												foreach ($snapshot_plugins as $plugin) { 
@@ -249,7 +311,7 @@ function pluginstatussnapshotter_page() {
 
 					</div>
 
-					<div class="pluginstatussnapshotter-confirmation-container">
+					<div class="pluginstatussnapshotter-confirmation-container pluginstatussnapshotter-restoredelete-container">
 						<div class="pluginstatussnapshotter-confirmation-dialog">
 
 							<form method="post" action="admin-post.php">
@@ -320,21 +382,29 @@ function pluginstatussnapshotter_save() {
 
 	$pss_options = get_option( 'pluginstatussnapshotter' );
 	$pss_allsnapshots = ( isset( $pss_options['pss_snapshots'] ) ) ? $pss_options['pss_snapshots'] : '';  // FULL 3D ARRAY
-	$pss_id = (int)(microtime(true) * 1000);
+	if ($activedefault == 'activate') {
+		$pss_id = '0000000000';
+	} else {
+		$pss_id = (int)(microtime(true) * 1000);
+	}
 	$current_date_time = sanitize_text_field(gmdate('l, M d, Y (H:i:s)'));
 	$active_plugins = [];	// 2 dimensional array that will contain all active plugins
+
+	if (isset($_POST['note'])) {
+    	$pss_note = sanitize_text_field(wp_unslash($_POST['note']));
+    }		
 
 	$pss_wp_options = get_option( 'active_plugins' );
 	foreach ($pss_wp_options as $active_plugin_file) {
 		// Do this for each active plugin
 		$plugin_file = sanitize_text_field($active_plugin_file);
-		$plugin_name = sanitize_text_field(getpluginname($active_plugin_file));
-		$plugin_author = sanitize_text_field(getpluginauthor($active_plugin_file));
+		$plugin_name = sanitize_text_field(pluginstatussnapshotter_getpluginname($active_plugin_file));
+		$plugin_author = sanitize_text_field(pluginstatussnapshotter_getpluginauthor($active_plugin_file));
 		array_push($active_plugins, [$plugin_file,$plugin_name,$plugin_author]);
 	}
 
 	// We now have a new element to add to the base array, each one being [ID,DATE,[PLUGIN FILE, PLUGIN NAME, PLUGIN AUTHOR]]
-	$pss_new_element = [$pss_id, $current_date_time, $active_plugins];
+	$pss_new_element = [$pss_id, $current_date_time, $active_plugins, $pss_note];
 	array_push($pss_allsnapshots, $pss_new_element); // Add the new snapshot to the array of all snapshots
 	// $pss_allsnapshots is an array that now contains the new snapshot and needs to go in the database
 
@@ -424,6 +494,7 @@ function pluginstatussnapshotter_restoredelete() {
 				$active_plugins = get_option( 'active_plugins' );
 				foreach ( $active_plugins as $plugin ) {
 					if ($plugin != 'plugin-status-napshotter/plugin-status-snapshotter.php') {
+						// Deactivate another plugin - after user confirms to restore snapshot
     					deactivate_plugins( $plugin );
     				}
 				}
@@ -432,6 +503,7 @@ function pluginstatussnapshotter_restoredelete() {
 					$ptr_path = $plugin_to_restore[0];
 					$ptr_name = $plugin_to_restore[1];
 					if ( ! is_plugin_active( $ptr_path ) ) {
+						// Activate another plugin - after user confirms to restore snapshot
  						activate_plugin( $ptr_path );
 					}
 				}
@@ -442,6 +514,7 @@ function pluginstatussnapshotter_restoredelete() {
 					$ptr_path = $plugin_to_restore[0];
 					$ptr_name = $plugin_to_restore[1];
 					if ( ! is_plugin_active( $ptr_path ) ) {
+						// Activate another plugin - after user confirms to restore snapshot
  						activate_plugin( $ptr_path );
 					}
 					// Check if it's now active. If it's still not, flag a warning
@@ -476,12 +549,12 @@ function pluginstatussnapshotter_restoredelete() {
 
 // --- GETTING THE NAME AND AUTHOR OF A PLUGIN ----------------------------------------------------------
 
-function getpluginname($file_path) {
+function pluginstatussnapshotter_getpluginname($file_path) {
 	// Check if the file exists
 	if (!file_exists(WP_PLUGIN_DIR .'/'. $file_path)) {
 		return false;
 	}		
-	$file_contents = file_get_contents(WP_PLUGIN_DIR .'/'. $file_path);
+	$file_contents = file_get_contents(WP_PLUGIN_DIR .'/'. $file_path);    // Getting contents from other plugin file
 	preg_match('/Plugin Name:\s*(.*)/', $file_contents, $name);
  
  	// If a plugin name is found, return it
@@ -493,12 +566,12 @@ function getpluginname($file_path) {
  	return false;
 }
 
-function getpluginauthor($file_path) {
+function pluginstatussnapshotter_getpluginauthor($file_path) {
 	// Check if the file exists
 	if (!file_exists(WP_PLUGIN_DIR .'/'. $file_path)) {
 		return false;
 	}		
-	$file_contents = file_get_contents(WP_PLUGIN_DIR .'/'. $file_path);
+	$file_contents = file_get_contents(WP_PLUGIN_DIR .'/'. $file_path);     // Getting contents from other plugin file
 	preg_match('/Author:\s*(.*)/', $file_contents, $author);
  
  	// If a plugin author is found, return it
@@ -518,10 +591,10 @@ function pluginstatussnapshotter_admin($hook) {
 		return;
 	}
 
-	wp_register_script('pluginstatussnapshotterAdminScript', plugins_url('/assets/js/plugin-status-snapshotter.js', __FILE__), array( 'jquery' ), '1.0', array( 'in_footer' => true ));
+	wp_register_script('pluginstatussnapshotterAdminScript', plugins_url('/assets/js/plugin-status-snapshotter.js', __FILE__), array( 'jquery' ), '1.1', array( 'in_footer' => true ));
 	wp_enqueue_script('pluginstatussnapshotterAdminScript');
 
-	wp_register_style('pluginstatussnapshotterAdminStyle', plugins_url('/assets/css/plugin-status-snapshotter.css', __FILE__),'', '1.0' );
+	wp_register_style('pluginstatussnapshotterAdminStyle', plugins_url('/assets/css/plugin-status-snapshotter.css', __FILE__),'', '1.1' );
 	wp_enqueue_style('pluginstatussnapshotterAdminStyle');		
 }
 

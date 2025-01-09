@@ -5,7 +5,7 @@
 * Plugin URI: https://wordpress.org/plugins/plugin-status-snapshotter
 * Requires at least: 5.0
 * Tested up to: 6.7
-* Stable tag: 1.0
+* Stable tag: 1.1
 * License: GPLv3
 * License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,7 +26,8 @@ Snapshots will only keep track which plugins were ACTIVE or not. It will NOT bac
 
 * One click to create or restore a Snapshot.
 * Make as many snapshots as you like.
-* Only saves which plugins are active and which aren't. 
+* Only saves the STATE of all plugins (which are active and which aren't).
+* Option to add a description to each Snapshot (e.g. "my favorite set of plugins").
 * No full database/configuration backup, so Snapshots are created and restored lightning fast.
 * View which plugins were active when a Snapshot was made, before you restore it.
 
@@ -82,11 +83,24 @@ Please go to the plugin's [community support forum](https://wordpress.org/suppor
 
 ## Changelog
 
+### 1.1
+* Added two standard/example Snapshots, automatically created upon plugin activation.
+* Added optional descriptions for Snapshots.
+
+### 1.0.1
+* Changes to follow plugin guidelines
+
 ### 1.0 
 * Initial release 
 
 
 ## Upgrade Notice 
+
+### 1.1
+* Added features
+
+### 1.0.1
+* Minor code changes
 
 ### 1.0
 * Initial release of the plugin
